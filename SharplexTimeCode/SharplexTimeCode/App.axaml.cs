@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using SharplexTimeCode.Configuration;
 using SharplexTimeCode.ViewModels;
 using SharplexTimeCode.Views;
 
@@ -15,21 +17,19 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var collection = new ServiceCollection();
+        collection.ConfigureUI();
+
+        var provider = collection.BuildServiceProvider();
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainViewModel()
+                DataContext = new MainWindowViewModel()
             };
         }
-        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-        {
-            singleViewPlatform.MainView = new MainView
-            {
-                DataContext = new MainViewModel()
-            };
-        }
-
+        
         base.OnFrameworkInitializationCompleted();
     }
 }

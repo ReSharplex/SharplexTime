@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:SharplexTimeCode.ViewModels"
+             xmlns:models="clr-namespace:SharplexTimeCode.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SharplexTimeCode.Views.SummaryView"
+             x:DataType="vm:SummaryViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:SummaryViewModel />
+  </Design.DataContext>
+    
+    <Grid ColumnDefinitions="300, Auto, Auto, Auto, Auto">
+        <ComboBox VerticalAlignment="Center" CornerRadius="15" Width="200" Height="50" ItemsSource="{Binding BookingTypes}" SelectedItem="{Binding SelectedBookingType}">
+            <ComboBox.Styles>
+                <Style Selector="ComboBox">
+                    <Setter Property="Background">
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#212F3C" Offset="0"/>
+                            <GradientStop Color="#0c1821" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter>
+                </Style>
+            </ComboBox.Styles>
+            <ComboBox.DataTemplates>
+                <DataTemplate DataType="models:BookingTypeUI">
+                    <TextBlock TextAlignment="Center" Text="{Binding Title}"/>
+                </DataTemplate>
+            </ComboBox.DataTemplates>
+        </ComboBox>
+    </Grid>
+    
+</UserControl>

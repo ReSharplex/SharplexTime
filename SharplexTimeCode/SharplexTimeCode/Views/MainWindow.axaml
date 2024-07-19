@@ -3,10 +3,74 @@
         xmlns:vm="using:SharplexTimeCode.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         xmlns:views="clr-namespace:SharplexTimeCode.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SharplexTimeCode.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SharplexTimeCode" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-        <views:MainView />
+        Title="SharplexTimeCode" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#0E0E0E"
+        ExtendClientAreaChromeHints="NoChrome" ExtendClientAreaToDecorationsHint="True"
+        x:DataType="vm:MainWindowViewModel" BorderThickness="0"
+        Height="{Binding Height}" Width="{Binding Width}" CornerRadius="20">
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+    
+    <Border BorderBrush="Transparent" BoxShadow="3 3 20 10 #21000A" BorderThickness="0" CornerRadius="20">
+        <Grid ColumnDefinitions="250, Auto, *, Auto">
+            <Border Margin="5 0 0 0" HorizontalAlignment="Left" CornerRadius="15"
+                    BoxShadow="-3 -3 3 -1 #303030, 2 3 3 -1 #3F0020" Width="250" Height="40">
+                <ComboBox VerticalAlignment="Center" PlaceholderForeground="White" FontWeight="Bold" CornerRadius="15"
+                          HorizontalContentAlignment="Center" PlaceholderText="... Booking ..."
+                          HorizontalAlignment="Center" BorderBrush="#05131E" Width="250" Height="40">
+                    <ComboBox.Styles>
+                        <Style Selector="ComboBox">
+                            <Setter Property="Background">
+                                <LinearGradientBrush StartPoint="0,50" EndPoint="0,100">
+                                    <GradientStop Color="#0A0A0A" Offset="0" />
+                                    <GradientStop Color="#051623" Offset="1" />
+                                </LinearGradientBrush>
+                            </Setter>
+                        </Style>
+                    </ComboBox.Styles>
+                </ComboBox>
+            </Border>
+            
+            <Grid Grid.Column="1" ColumnDefinitions="*, *, *" Margin="10 0 0 0">
+                <Button Grid.Column="0" VerticalAlignment="Center" CornerRadius="10" HorizontalAlignment="Center" Background="#191919">
+                    <Button.Content>
+                        <materialIcons:MaterialIcon Foreground="LightGreen" Width="25"  Height="25" Kind="Play" />
+                    </Button.Content>
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel Orientation="Horizontal">
+                                <Button>
+                                    <Button.Content>
+                                        <materialIcons:MaterialIcon Foreground="LightGreen" Width="25"  Height="25" Kind="Play" />
+                                    </Button.Content>
+                                </Button>
+                                <Button>
+                                    <Button.Content>
+                                        <materialIcons:MaterialIcon Foreground="Orange" Width="25"  Height="25" Kind="Pause" />
+                                    </Button.Content>
+                                </Button>
+                                <Button>
+                                    <Button.Content>
+                                        <materialIcons:MaterialIcon Foreground="Red" Width="25"  Height="25" Kind="Stop" />
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+            
+            <Button Grid.Column="3" Background="#191919" CornerRadius="50" Margin="0 0 5 0">
+                <Button.Content>
+                    <materialIcons:MaterialIcon Foreground="DarkGray" Width="25"  Height="25" Kind="Menu" />
+                </Button.Content> 
+            </Button>
+            
+        </Grid>
+    </Border>
 </Window>

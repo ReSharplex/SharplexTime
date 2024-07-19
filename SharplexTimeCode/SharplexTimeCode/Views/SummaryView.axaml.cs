@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace SharplexTimeCode.Views;
 
-public partial class MainView : UserControl
+public partial class SummaryView : UserControl
 {
-    public MainView()
+    public SummaryView()
     {
         InitializeComponent();
     }
