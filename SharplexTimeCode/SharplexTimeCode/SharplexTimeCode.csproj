@@ -24,4 +24,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\SharplexTimeCode.Core\SharplexTimeCode.Core.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Command\" />
+    </ItemGroup>
 </Project>

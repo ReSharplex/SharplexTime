@@ -8,11 +8,17 @@ public class AppDbContext : DbContext
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<BookingType> BookingTypes { get; set; }
 
+    public string DbPath { get; init; }
+    
+    public AppDbContext()
+    {
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var path = Environment.GetFolderPath(folder);
+        DbPath = Path.Join(path, "sharplexTime.db");
+    }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlite("Data Source=sharplexTime.db");
-        }
+        optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
 }

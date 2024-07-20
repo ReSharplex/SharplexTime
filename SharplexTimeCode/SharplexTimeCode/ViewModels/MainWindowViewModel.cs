@@ -1,13 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using ReactiveUI;
 
 namespace SharplexTimeCode.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    public MainWindowViewModel()
+    public MainWindowViewModel(IServiceProvider provider)
     {
-        SelectedPage = new SummaryViewModel(this);
+        SelectedPage = new SummaryViewModel(this, provider);
     }
     
     public ObservableCollection<PageViewModel> Pages { get; } = [];

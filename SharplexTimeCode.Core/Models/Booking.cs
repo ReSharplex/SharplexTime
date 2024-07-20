@@ -1,7 +1,11 @@
-﻿namespace SharplexTimeCode.Core.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+
+namespace SharplexTimeCode.Core.Models;
 
 public class Booking
 {
+    [Key]
     public Guid Id { get; set; }
     
     public int BookingTypeId { get; set; }
