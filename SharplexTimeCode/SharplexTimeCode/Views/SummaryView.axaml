@@ -53,7 +53,7 @@
             
             <Border Grid.Column="1" Margin="5 0 0 0" HorizontalAlignment="Left" CornerRadius="5"
                     BoxShadow="-0 -4 3 -1 #303030, 0 4 3 0 Black" Width="250" Height="35">
-                <ComboBox VerticalAlignment="Center" PlaceholderForeground="White" CornerRadius="5"
+                <ComboBox VerticalAlignment="Center" PlaceholderForeground="White" CornerRadius="5" Foreground="DarkGray"
                            PlaceholderText="... Booking ..."
                           HorizontalAlignment="Center" BorderBrush="Transparent" Width="250" Height="35" ItemsSource="{Binding BookingTypes}" SelectedItem="{Binding SelectedBookingType}">
                     <ComboBox.Styles>
@@ -72,8 +72,8 @@
                     <ComboBox.DataTemplates>
                         <DataTemplate DataType="models:BookingTypeUI">
                             <Grid ColumnDefinitions="Auto, *">
-                                <TextBlock FontSize="16" FontWeight="Bold" Foreground="Orange" HorizontalAlignment="Center" Text="{Binding Id}"/>
-                                <TextBlock FontSize="16" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}"/>
+                                <TextBlock FontSize="25" VerticalAlignment="Center" FontWeight="ExtraBold" Foreground="Yellow" Opacity="90" HorizontalAlignment="Center" Text="{Binding Id}"/>
+                                <TextBlock FontSize="16" FontWeight="Medium" Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}"/>
                             </Grid>
                         </DataTemplate>
                     </ComboBox.DataTemplates>
@@ -81,7 +81,7 @@
             </Border>
             
             <Grid Grid.Column="2">
-                <TextBlock Text="02:21" FontSize="25" Foreground="DarkGray" Opacity="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="02:21" FontWeight="Medium" FontSize="35" Foreground="DarkGray" Opacity="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             
             <Button Grid.Column="3" Background="#191919" CornerRadius="50" Margin="0 0 5 0" BorderThickness="2" BorderBrush="#080808">
