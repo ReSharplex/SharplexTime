@@ -80,12 +80,31 @@
                 </ComboBox>
             </Border>
             
+            <Grid Grid.Column="2">
+                <TextBlock Text="02:21" FontSize="25" Foreground="DarkGray" Opacity="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            
             <Button Grid.Column="3" Background="#191919" CornerRadius="50" Margin="0 0 5 0" BorderThickness="2" BorderBrush="#080808">
                 <Button.Content>
                     <materialIcons:MaterialIcon Foreground="DarkGray" Width="25"  Height="25" Kind="Menu" />
                 </Button.Content> 
+                <Button.Flyout>
+                    <Flyout FlyoutPresenterClasses="mySpecialClass">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <Button Background="#1A1A1A" BorderBrush="Black">
+                                <Button.Content>
+                                    <materialIcons:MaterialIcon Foreground="LightSeaGreen" Width="25"  Height="25" Kind="Pin" />
+                                </Button.Content>
+                            </Button>
+                            <Button Background="#1A1A1A" BorderBrush="Black">
+                                <Button.Content>
+                                    <materialIcons:MaterialIcon Foreground="DarkGray" Width="25"  Height="25" Kind="Menu" />
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
             </Button>
-            
         </Grid>
     </Border>
     
