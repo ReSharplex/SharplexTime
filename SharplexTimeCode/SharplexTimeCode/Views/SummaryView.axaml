@@ -72,8 +72,8 @@
                     <ComboBox.DataTemplates>
                         <DataTemplate DataType="models:BookingTypeUI">
                             <Grid ColumnDefinitions="Auto, *">
-                                <TextBlock FontWeight="Bold" Foreground="Orange" HorizontalAlignment="Center" Text="{Binding Id}"/>
-                                <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="{Binding Title}"/>
+                                <TextBlock FontSize="16" FontWeight="Bold" Foreground="Orange" HorizontalAlignment="Center" Text="{Binding Id}"/>
+                                <TextBlock FontSize="16" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}"/>
                             </Grid>
                         </DataTemplate>
                     </ComboBox.DataTemplates>
