@@ -46,6 +46,13 @@ public class SummaryViewModel : PageViewModel
                 });
             }
         });
+
+        SetDetailedViewCommand = ReactiveCommand.Create(() =>
+        {
+            mainWindowViewModel.Height = 600;
+            mainWindowViewModel.Width = 500;
+            mainWindowViewModel.SelectedPage = mainWindowViewModel.Pages[1];
+        });
         
         RefreshTypesCommand.Execute(null);
     }
@@ -54,6 +61,7 @@ public class SummaryViewModel : PageViewModel
     public ICommand PauseCommand { get; }
     public ICommand StopCommand { get; }
     public ICommand RefreshTypesCommand { get; }
+    public ICommand SetDetailedViewCommand { get; }
     
     private string _actionButtonContent;
     public string ActionButtonContent

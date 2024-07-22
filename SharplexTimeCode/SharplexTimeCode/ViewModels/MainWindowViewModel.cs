@@ -8,7 +8,9 @@ public class MainWindowViewModel : ViewModelBase
 {
     public MainWindowViewModel(IServiceProvider provider)
     {
-        SelectedPage = new SummaryViewModel(this, provider);
+        Pages.Add(new SummaryViewModel(this, provider));
+        Pages.Add(new DetailedViewModel(this, provider));
+        SelectedPage = Pages[0];
     }
     
     public ObservableCollection<PageViewModel> Pages { get; } = [];

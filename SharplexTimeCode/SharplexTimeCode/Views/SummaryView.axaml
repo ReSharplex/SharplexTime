@@ -96,7 +96,7 @@
                                     <materialIcons:MaterialIcon Foreground="LightSeaGreen" Width="25"  Height="25" Kind="Pin" />
                                 </Button.Content>
                             </Button>
-                            <Button Background="#1A1A1A" BorderBrush="Black">
+                            <Button Background="#1A1A1A" BorderBrush="Black" Command="{Binding SetDetailedViewCommand}">
                                 <Button.Content>
                                     <materialIcons:MaterialIcon Foreground="DarkGray" Width="25"  Height="25" Kind="Menu" />
                                 </Button.Content>
