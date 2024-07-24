@@ -7,7 +7,7 @@
              xmlns:models="clr-namespace:SharplexTimeCode.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SharplexTimeCode.Views.SummaryView"
-             x:DataType="vm:SummaryViewModel">
+             x:DataType="vm:SummaryViewModel" Loaded="Control_OnLoaded">
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
@@ -84,7 +84,7 @@
                 <TextBlock Text="02:21" FontWeight="Medium" FontSize="35" Foreground="DarkGray" Opacity="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             
-            <Button Grid.Column="3" Background="#191919" CornerRadius="50" Margin="0 0 5 0" BorderThickness="2" BorderBrush="#080808">
+            <Button Grid.Column="3" Background="#191919" Name="MenuButton" CornerRadius="50" Margin="0 0 5 0" BorderThickness="2" BorderBrush="#080808">
                 <Button.Content>
                     <materialIcons:MaterialIcon Foreground="DarkGray" Width="25"  Height="25" Kind="Menu" />
                 </Button.Content> 

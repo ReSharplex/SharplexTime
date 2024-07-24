@@ -8,5 +8,6 @@ public static class ButtonHelper
     {
         viewModel.ActionButtonContent = content;
         viewModel.ActionButtonForeground = foreground;
+        viewModel.RaiseCloseActionButtonFlyout();
     }
 }

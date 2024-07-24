@@ -41,11 +41,14 @@ public class SummaryViewModel : PageViewModel
             {
                 mainWindowViewModel.Height = 600;
                 mainWindowViewModel.SelectedPage = mainWindowViewModel.Pages[1];
-                return;
             }
-
-            mainWindowViewModel.Height = 50;
-            mainWindowViewModel.SelectedPage = null;
+            else
+            {
+                mainWindowViewModel.Height = 50;
+                mainWindowViewModel.SelectedPage = null;
+            }
+            
+            RaiseCloseMenuButtonFlyout();
         });
         
         RefreshTypesCommand.Execute(null);
@@ -56,6 +59,12 @@ public class SummaryViewModel : PageViewModel
     public ICommand StopCommand { get; }
     public ICommand RefreshTypesCommand { get; }
     public ICommand SetDetailedViewCommand { get; }
+
+    public delegate void CloseActionButtonFlyout();
+    public event CloseActionButtonFlyout CloseActionButtonFlyoutEvent;
+    
+    public delegate void CloseMenuButtonFlyout();
+    public event CloseMenuButtonFlyout CloseMenuButtonFlyoutEvent;
     public ObservableCollection<BookingTypeUI> BookingTypes { get; } = [];
     
     private string _actionButtonContent;
@@ -77,5 +86,15 @@ public class SummaryViewModel : PageViewModel
     {
         get => _selectedBookingType;
         set => this.RaiseAndSetIfChanged(ref _selectedBookingType, value);
+    }
+
+    public void RaiseCloseActionButtonFlyout()
+    {
+        CloseActionButtonFlyoutEvent?.Invoke();
+    }
+    
+    public void RaiseCloseMenuButtonFlyout()
+    {
+        CloseMenuButtonFlyoutEvent?.Invoke();
     }
 }
