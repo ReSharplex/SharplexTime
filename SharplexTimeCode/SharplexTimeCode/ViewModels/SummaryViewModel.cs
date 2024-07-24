@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using SharplexTimeCode.Core.Services;
 using SharplexTimeCode.Models;
+using static SharplexTimeCode.Helper.ButtonHelper;
 
 namespace SharplexTimeCode.ViewModels;
 
@@ -14,25 +15,12 @@ public class SummaryViewModel : PageViewModel
     {
         mainWindowViewModel.Height = 50;
         mainWindowViewModel.Width = 500;
+
+        SetButtonContent("Select", "#F1C40F", this);
         
-        ActionButtonContent = "Select";
-        ActionButtonForeground = "#F1C40F";
-        
-        PlayCommand = ReactiveCommand.Create(() =>
-        {
-            ActionButtonContent = "Timer";
-            ActionButtonForeground = "LightGreen";
-        });
-        PauseCommand = ReactiveCommand.Create(() =>
-        {
-            ActionButtonContent = "Pause";
-            ActionButtonForeground = "Orange";
-        });
-        StopCommand = ReactiveCommand.Create(() =>
-        {
-            ActionButtonContent = "Select";
-            ActionButtonForeground = "#F1C40F";
-        });
+        PlayCommand = ReactiveCommand.Create(() => SetButtonContent("Timer", "LightGreen", this));
+        PauseCommand = ReactiveCommand.Create(() => SetButtonContent("Pause", "Orange", this));
+        StopCommand = ReactiveCommand.Create(() => SetButtonContent("Select", "#F1C40F", this));
         RefreshTypesCommand = ReactiveCommand.Create(() =>
         {
             var bookingTypes = provider.GetRequiredService<IBookingTypeService>().GetBookingTypes();
@@ -49,9 +37,15 @@ public class SummaryViewModel : PageViewModel
 
         SetDetailedViewCommand = ReactiveCommand.Create(() =>
         {
-            mainWindowViewModel.Height = 600;
-            mainWindowViewModel.Width = 500;
-            mainWindowViewModel.SelectedPage = mainWindowViewModel.Pages[1];
+            if (mainWindowViewModel.SelectedPage is null)
+            {
+                mainWindowViewModel.Height = 600;
+                mainWindowViewModel.SelectedPage = mainWindowViewModel.Pages[1];
+                return;
+            }
+
+            mainWindowViewModel.Height = 50;
+            mainWindowViewModel.SelectedPage = null;
         });
         
         RefreshTypesCommand.Execute(null);
@@ -62,6 +56,7 @@ public class SummaryViewModel : PageViewModel
     public ICommand StopCommand { get; }
     public ICommand RefreshTypesCommand { get; }
     public ICommand SetDetailedViewCommand { get; }
+    public ObservableCollection<BookingTypeUI> BookingTypes { get; } = [];
     
     private string _actionButtonContent;
     public string ActionButtonContent
@@ -76,8 +71,6 @@ public class SummaryViewModel : PageViewModel
         get => _actionButtonForeground;
         set => this.RaiseAndSetIfChanged(ref _actionButtonForeground, value);
     }
-    
-    public ObservableCollection<BookingTypeUI> BookingTypes { get; } = [];
     
     private BookingTypeUI _selectedBookingType;
     public BookingTypeUI SelectedBookingType

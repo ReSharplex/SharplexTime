@@ -10,13 +10,20 @@ public class MainWindowViewModel : ViewModelBase
     {
         Pages.Add(new SummaryViewModel(this, provider));
         Pages.Add(new DetailedViewModel(this, provider));
-        SelectedPage = Pages[0];
+        TopControl = Pages[0];
     }
     
     public ObservableCollection<PageViewModel> Pages { get; } = [];
 
-    private PageViewModel _selectedPage;
-    public PageViewModel SelectedPage
+    private PageViewModel _topControl;
+    public PageViewModel TopControl
+    {
+        get => _topControl;
+        set => this.RaiseAndSetIfChanged(ref _topControl, value);
+    }
+    
+    private PageViewModel? _selectedPage;
+    public PageViewModel? SelectedPage
     {
         get => _selectedPage;
         set => this.RaiseAndSetIfChanged(ref _selectedPage, value);
