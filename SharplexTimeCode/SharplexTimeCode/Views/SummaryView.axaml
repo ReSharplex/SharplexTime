@@ -21,28 +21,28 @@
     </UserControl.Styles>
     
     <Border BorderBrush="Transparent" BoxShadow="3 3 20 10 Black" BorderThickness="0" CornerRadius="20">
-        <Grid ColumnDefinitions="Auto, 250, *, Auto">
+        <Grid ColumnDefinitions="Auto, 270, *, Auto">
             <Grid Grid.Column="0" ColumnDefinitions="*, *, *" Margin="5 0 0 0">
                 <Button Grid.Column="0" Name="ActionButton" VerticalAlignment="Center" CornerRadius="10" HorizontalAlignment="Center" Background="#191919" BorderThickness="2" BorderBrush="#080808">
                     <Button.Content>
-                        <materialIcons:MaterialIcon Foreground="{Binding ActionButtonForeground}" Width="25"  Height="25" Kind="{Binding ActionButtonContent}" />
+                        <materialIcons:MaterialIcon Foreground="{Binding ActionButtonForeground}" Opacity="90" Width="25"  Height="25" Kind="{Binding ActionButtonContent}" />
                     </Button.Content>
                     <Button.Flyout>
                         <Flyout FlyoutPresenterClasses="mySpecialClass">
                             <StackPanel Orientation="Horizontal" Spacing="5">
                                 <Button Background="#1A1A1A" BorderBrush="Black" Command="{Binding PlayCommand}">
                                     <Button.Content>
-                                        <materialIcons:MaterialIcon Foreground="LightGreen" Width="25"  Height="25" Kind="Timer" />
+                                        <materialIcons:MaterialIcon Foreground="LightGreen" Opacity="90" Width="25"  Height="25" Kind="Timer" />
                                     </Button.Content>
                                 </Button>
                                 <Button Background="#1A1A1A" BorderBrush="Black" Command="{Binding PauseCommand}">
                                     <Button.Content>
-                                        <materialIcons:MaterialIcon Foreground="Orange" Width="25"  Height="25" Kind="Pause" />
+                                        <materialIcons:MaterialIcon Foreground="Orange" Opacity="90" Width="25"  Height="25" Kind="Pause" />
                                     </Button.Content>
                                 </Button>
                                 <Button Background="#1A1A1A" BorderBrush="Black" Command="{Binding StopCommand}">
                                     <Button.Content>
-                                        <materialIcons:MaterialIcon Foreground="Red" Width="25"  Height="25" Kind="TimerOff" />
+                                        <materialIcons:MaterialIcon Foreground="IndianRed" Width="25"  Height="25" Kind="TimerOff" />
                                     </Button.Content>
                                 </Button>
                             </StackPanel>
@@ -52,10 +52,10 @@
             </Grid>
             
             <Border Grid.Column="1" Margin="5 0 0 0" HorizontalAlignment="Left" CornerRadius="5"
-                    BoxShadow="-0 -4 3 -1 #303030, 0 4 3 0 Black" Width="250" Height="35">
+                    BoxShadow="0 4 3 0 Black" Width="270" Height="35">
                 <ComboBox VerticalAlignment="Center" PlaceholderForeground="White" CornerRadius="5" Foreground="DarkGray"
-                           PlaceholderText="... Booking ..."
-                          HorizontalAlignment="Center" BorderBrush="Transparent" Width="250" Height="35" ItemsSource="{Binding BookingTypes}" SelectedItem="{Binding SelectedBookingType}">
+                           PlaceholderText="... Booking ..." Background="#0E0E0E"
+                          HorizontalAlignment="Center" BorderBrush="Transparent" Width="270" Height="35" ItemsSource="{Binding BookingTypes}" SelectedItem="{Binding SelectedBookingType}">
                     <ComboBox.Styles>
                         <Style Selector="ComboBox">
                             <Setter Property="Background">
@@ -71,9 +71,9 @@
                     </ComboBox.Styles>
                     <ComboBox.DataTemplates>
                         <DataTemplate DataType="models:BookingTypeUI">
-                            <Grid ColumnDefinitions="Auto, *">
-                                <TextBlock FontSize="25" VerticalAlignment="Center" FontWeight="ExtraBold" Foreground="Yellow" Opacity="90" HorizontalAlignment="Center" Text="{Binding Id}"/>
-                                <TextBlock FontSize="16" FontWeight="Medium" Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}"/>
+                            <Grid ColumnDefinitions="Auto, 10, *">
+                                <TextBlock FontSize="25" VerticalAlignment="Center" FontWeight="ExtraBold" Foreground="Yellow" Opacity="120" HorizontalAlignment="Center" Text="{Binding Id}"/>
+                                <TextBlock FontSize="16" FontWeight="Medium" Grid.Column="2" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Title}"/>
                             </Grid>
                         </DataTemplate>
                     </ComboBox.DataTemplates>
@@ -93,12 +93,17 @@
                         <StackPanel Orientation="Horizontal" Spacing="5">
                             <Button Background="#1A1A1A" BorderBrush="Black">
                                 <Button.Content>
-                                    <materialIcons:MaterialIcon Foreground="LightSeaGreen" Width="25"  Height="25" Kind="Pin" />
+                                    <materialIcons:MaterialIcon Foreground="LightSeaGreen" Width="25" Height="25" Kind="Pin" />
                                 </Button.Content>
                             </Button>
                             <Button Background="#1A1A1A" BorderBrush="Black" Command="{Binding SetDetailedViewCommand}">
                                 <Button.Content>
-                                    <materialIcons:MaterialIcon Foreground="DarkGray" Width="25"  Height="25" Kind="Menu" />
+                                    <materialIcons:MaterialIcon Foreground="DarkGray" Width="25" Height="25" Kind="Menu" />
+                                </Button.Content>
+                            </Button>
+                            <Button Background="#1A1A1A" BorderBrush="Black">
+                                <Button.Content>
+                                    <materialIcons:MaterialIcon Foreground="IndianRed" Width="25" Height="25" Kind="Close" />
                                 </Button.Content>
                             </Button>
                         </StackPanel>
