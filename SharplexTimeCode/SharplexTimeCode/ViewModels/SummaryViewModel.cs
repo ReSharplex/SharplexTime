@@ -13,7 +13,7 @@ public class SummaryViewModel : PageViewModel
 {
     public SummaryViewModel(MainWindowViewModel mainWindowViewModel, IServiceProvider provider)
     {
-        mainWindowViewModel.Height = 50;
+        mainWindowViewModel.Height = 600;
         mainWindowViewModel.Width = 500;
 
         SetButtonContent("Select", "#F1C40F", this);

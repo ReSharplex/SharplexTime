@@ -17,6 +17,24 @@
     </Design.DataContext>
     <Grid RowDefinitions="50, 550">
         <ContentControl Grid.Row="0" Content="{Binding TopControl}"/>
-        <ContentControl Grid.Row="1" Content="{Binding SelectedPage}"/>
+        <!--<ContentControl Grid.Row="1" Content="{Binding SelectedPage}"/>-->
+        <Grid Grid.Row="1" RowDefinitions="*, 40">
+            <Border Grid.Row="1" Background="#111111" CornerRadius="0 0 20 20" Margin="0 0" BoxShadow="0 40 100 10 White" Opacity="150" BorderThickness="1">
+                <Grid ColumnDefinitions="*, *, *, *">
+                    <Button Grid.Column="0" HorizontalAlignment="Center" Background="#111111" CornerRadius="30">
+                        <materialIcons:MaterialIcon Kind="Home" Foreground="DarkGray" Width="30" Height="30"/>
+                    </Button>
+                    <Button Grid.Column="1" HorizontalAlignment="Center" Background="#111111">
+                        <materialIcons:MaterialIcon Kind="ChartArc" Foreground="DarkGray" Width="30" Height="30"/>
+                    </Button>
+                    <Button Grid.Column="2" HorizontalAlignment="Center" Background="#111111">
+                        <materialIcons:MaterialIcon Kind="ChartAreaspline" Foreground="DarkGray" Width="30" Height="30"/>
+                    </Button>
+                    <Button Grid.Column="3" HorizontalAlignment="Center" Background="#111111">
+                        <materialIcons:MaterialIcon Kind="Settings" Foreground="DarkGray" Width="30" Height="30"/>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
