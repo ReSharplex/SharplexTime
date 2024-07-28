@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Globalization;
 using Avalonia.Data.Converters;
+using SharplexTimeCode.Helper;
 
 namespace SharplexTimeCode.CustomControls.Converter;
 
-public class DayOfWeekConverter : IValueConverter
+public class DateOnlyConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is DayOfWeek dayOfWeek)
+        if (value is DateOnly dateOnly)
         {
-            var dayOfWeekString = dayOfWeek.ToString();
-            return dayOfWeekString.Length > 3 ? dayOfWeekString.Substring(0, 3).ToUpper(culture) : dayOfWeekString.ToUpper();
+            return ConverterHelper.GetFullMonthName(dateOnly.Month);
         }
 
-        return value;
+        return string.Empty;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

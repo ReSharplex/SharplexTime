@@ -67,10 +67,21 @@ public class TimeCalendarControl : TemplatedControl
     private void UpdateDates()
     {
         var maxDate = SelectedDate.AddDays(MaxCount);
+    
+        DateOnlyModel Selector(int i)
+        {
+            var date = SelectedDate.AddDays(i);
+            if (date.Day == 1 || DateTime.DaysInMonth(date.Year, date.Month) == date.Day)
+            {
+                return new(date, true);
+            }
+            
+            return new(date);
+        }
 
         var dateOnlies = Enumerable
             .Range(1, MaxCount)
-            .Select(i => new DateOnlyModel(SelectedDate.AddDays(i)))
+            .Select(Selector)
             .TakeWhile(d => d.Value <= maxDate)
             .ToList();
 
@@ -113,12 +124,32 @@ public class TimeCalendarControl : TemplatedControl
             if (e.Delta.Y < 0)
             {
                 DatesOnlies.Remove(DatesOnlies.FirstOrDefault());
-                DatesOnlies.Add(new DateOnlyModel(DatesOnlies.Last().Value.AddDays(1)));
+
+                var date = DatesOnlies.Last().Value.AddDays(1);
+
+                if (date.Day == 1 || DateTime.DaysInMonth(date.Year, date.Month) == date.Day)
+                {
+                    DatesOnlies.Add(new(date, true));
+                }
+                else
+                {
+                    DatesOnlies.Add(new(date));
+                }
             }
             else
             {
                 DatesOnlies.Remove(DatesOnlies.LastOrDefault());
-                DatesOnlies.Insert(0, new DateOnlyModel(DatesOnlies.FirstOrDefault()!.Value.AddDays(-1)));
+
+                var date = DatesOnlies.FirstOrDefault()!.Value.AddDays(-1);
+                
+                if (date.Day == 1 || DateTime.DaysInMonth(date.Year, date.Month) == date.Day)
+                {
+                    DatesOnlies.Insert(0, new DateOnlyModel(date, true));
+                }
+                else
+                {
+                    DatesOnlies.Insert(0, new DateOnlyModel(date));
+                }
             }
 
             e.Handled = true;
