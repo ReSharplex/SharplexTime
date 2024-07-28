@@ -6,8 +6,22 @@ namespace SharplexTimeCode.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
+    
+    // transfer later to detailedview
+    private DateOnly _selectedDate;
+    public DateOnly SelectedDate
+    {
+        get => _selectedDate;
+        set => this.RaiseAndSetIfChanged(ref _selectedDate, value);
+    }
+    
     public MainWindowViewModel(IServiceProvider provider)
     {
+        // transfer later to detailedview
+
+        SelectedDate = DateOnly.FromDateTime(DateTime.Now);
+        
+        // ...
         Pages.Add(new SummaryViewModel(this, provider));
         Pages.Add(new DetailedViewModel(this, provider));
         TopControl = Pages[0];

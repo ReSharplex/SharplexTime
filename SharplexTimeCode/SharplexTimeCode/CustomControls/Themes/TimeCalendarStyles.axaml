@@ -1,0 +1,65 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:controls="clr-namespace:SharplexTimeCode.CustomControls.Controls"
+                    xmlns:models="clr-namespace:SharplexTimeCode.CustomControls.Models"
+                    x:CompileBindings="False"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Design.PreviewWith>
+        <StackPanel Width="400" Spacing="10">
+            <ThemeVariantScope RequestedThemeVariant="Default">
+                <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+                    <controls:TimeCalendarControl Background="#121212"/>
+                </StackPanel>
+            </ThemeVariantScope>
+        </StackPanel>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type controls:TimeCalendarControl}" TargetType="controls:TimeCalendarControl">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors Width="100">
+                    <Grid RowDefinitions="30, *, 20">
+                        <ComboBox CornerRadius="110" BorderBrush="Transparent" PlaceholderText="Month"
+                                  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Height="10"
+                                  Width="100" FontSize="13">
+                            <ComboBoxItem>
+                                <TextBlock Text="Jan" />
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Februar" />
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Mär" />
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <Border Grid.Row="1" Width="100">
+                            <ListBox x:Name="PART_TimeCalendarPresenter" CornerRadius="20"
+                                     ItemsSource="{TemplateBinding DatesOnlies}" Background="#121212">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:DateOnlyModel">
+                                        <Grid RowDefinitions="*, Auto" Margin="0 5">
+                                            <TextBlock Text="{Binding Value.Day}" Foreground="Yellow" FontWeight="ExtraBold" HorizontalAlignment="Center" Opacity="120" FontSize="23"/>
+                                            <TextBlock Grid.Row="1" Text="{Binding Value.DayOfWeek}" Foreground="White" FontWeight="Medium" HorizontalAlignment="Center" Opacity="150" FontSize="12"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+                        <ComboBox Grid.Row="2" PlaceholderText="Month" HorizontalAlignment="Center"
+                                  HorizontalContentAlignment="Center" Height="10" Width="100" FontSize="13">
+                            <ComboBoxItem>
+                                <TextBlock Text="Jan" />
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Februar" />
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Mär" />
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
