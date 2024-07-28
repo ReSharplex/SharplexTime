@@ -10,7 +10,7 @@ public class DateOnlyModel(DateOnly value, bool isFirstOrLastDay = false)
     public bool IsFirstOrLastDay { get; set; } = isFirstOrLastDay;
     
     public string DayOfWeek => IsFirstOrLastDay
-        ? ConverterHelper.GetMonthName(Value.Month)
+        ? ConverterHelper.GetMonthName(Value.Month).ToUpper()
         : ConverterHelper.ModifyDay(Value.DayOfWeek.ToString());
 
     public string Color => IsFirstOrLastDay

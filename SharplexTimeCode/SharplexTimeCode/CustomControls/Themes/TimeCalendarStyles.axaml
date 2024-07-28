@@ -6,7 +6,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Design.PreviewWith>
-        <StackPanel Width="450" Spacing="10">
+        <StackPanel Width="500" Spacing="10">
             <ThemeVariantScope RequestedThemeVariant="Default">
                 <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
                     <controls:TimeCalendarControl Background="#121212"/>
@@ -23,8 +23,9 @@
             <ControlTemplate>
                 <DataValidationErrors>
                     <Grid RowDefinitions="50, *">
-                        <Grid ColumnDefinitions="*, *">
-                            <TextBlock VerticalAlignment="Bottom" FontSize="20" Foreground="White" HorizontalAlignment="Left" Text="{TemplateBinding SelectedDate, Converter={StaticResource DateOnlyConverter}}"/>
+                        <Grid ColumnDefinitions="*, *" Margin="15 0">
+                            <TextBlock VerticalAlignment="Bottom" FontSize="20" Foreground="DarkGray" Opacity="80" HorizontalAlignment="Left" Text="{TemplateBinding SelectedMonth}"/>
+                            <TextBlock Grid.Column="1" VerticalAlignment="Bottom" FontSize="20" Foreground="DarkGray" Opacity="80" HorizontalAlignment="Right" Text="{TemplateBinding SelectedYear}"/>
                         </Grid>
                         
                         <Border Grid.Row="1">
@@ -43,6 +44,14 @@
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
+                                <ListBox.Styles>
+                                    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                                        <Setter Property="Background" Value="Black" />
+                                    </Style>
+                                    <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+                                        <Setter Property="Background" Value="Black" />
+                                    </Style>
+                                </ListBox.Styles>
                             </ListBox>
                         </Border>
                     </Grid>

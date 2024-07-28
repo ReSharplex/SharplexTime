@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using SharplexTimeCode.CustomControls.Models;
+using SharplexTimeCode.Helper;
 
 namespace SharplexTimeCode.CustomControls.Controls;
 
@@ -45,6 +46,32 @@ public class TimeCalendarControl : TemplatedControl
         set => SetAndRaise(SelectedDateProperty, ref _selectedDate, value);
     }
 
+    public static readonly DirectProperty<TimeCalendarControl, string> SelectedMonthProperty =
+        AvaloniaProperty.RegisterDirect<TimeCalendarControl, string>(
+            nameof(SelectedMonth),
+            o => o.SelectedMonth,
+            (o, v) => o.SelectedMonth = v);
+    
+    private string _selectedMonth;
+    public string SelectedMonth
+    {
+        get => _selectedMonth;
+        set => SetAndRaise(SelectedMonthProperty, ref _selectedMonth, value);
+    }
+    
+    public static readonly DirectProperty<TimeCalendarControl, string> SelectedYearProperty =
+        AvaloniaProperty.RegisterDirect<TimeCalendarControl, string>(
+            nameof(SelectedYear),
+            o => o.SelectedYear,
+            (o, v) => o.SelectedYear = v);
+    
+    private string _selectedYear;
+    public string SelectedYear
+    {
+        get => _selectedYear;
+        set => SetAndRaise(SelectedYearProperty, ref _selectedYear, value);
+    }
+
     public static readonly DirectProperty<TimeCalendarControl, ObservableCollection<DateOnlyModel>> DatesOnliesProperty =
         AvaloniaProperty.RegisterDirect<TimeCalendarControl, ObservableCollection<DateOnlyModel>>(
             nameof(DatesOnlies),
@@ -71,7 +98,7 @@ public class TimeCalendarControl : TemplatedControl
         DateOnlyModel Selector(int i)
         {
             var date = SelectedDate.AddDays(i);
-            if (date.Day == 1 || DateTime.DaysInMonth(date.Year, date.Month) == date.Day)
+            if (date.IsFirstOrLastDay())
             {
                 return new(date, true);
             }
@@ -84,8 +111,10 @@ public class TimeCalendarControl : TemplatedControl
             .Select(Selector)
             .TakeWhile(d => d.Value <= maxDate)
             .ToList();
-
+        
         DatesOnlies = new(dateOnlies);
+        
+        IsBetweenMonthsAndYears();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -127,7 +156,7 @@ public class TimeCalendarControl : TemplatedControl
 
                 var date = DatesOnlies.Last().Value.AddDays(1);
 
-                if (date.Day == 1 || DateTime.DaysInMonth(date.Year, date.Month) == date.Day)
+                if (date.IsFirstOrLastDay())
                 {
                     DatesOnlies.Add(new(date, true));
                 }
@@ -141,21 +170,43 @@ public class TimeCalendarControl : TemplatedControl
                 DatesOnlies.Remove(DatesOnlies.LastOrDefault());
 
                 var date = DatesOnlies.FirstOrDefault()!.Value.AddDays(-1);
-                
-                if (date.Day == 1 || DateTime.DaysInMonth(date.Year, date.Month) == date.Day)
-                {
-                    DatesOnlies.Insert(0, new DateOnlyModel(date, true));
-                }
-                else
-                {
-                    DatesOnlies.Insert(0, new DateOnlyModel(date));
-                }
+
+                DatesOnlies.Insert(0,
+                    date.IsFirstOrLastDay() ? new DateOnlyModel(date, true) : new DateOnlyModel(date));
             }
+            
+            IsBetweenMonthsAndYears();
 
             e.Handled = true;
         }
     }
 
+    public void IsBetweenMonthsAndYears()
+    {
+        IsBetweenMonths();
+        IsBetweenYears();
+    }
+    
+    private void IsBetweenMonths()
+    {
+        var firstDate = DatesOnlies.First();
+        var lastDate = DatesOnlies.Last();
+        
+        SelectedMonth = firstDate.Value.Month == lastDate.Value.Month 
+            ? ConverterHelper.GetFullMonthName(firstDate.Value.Month) 
+            : $"{ConverterHelper.GetMonthName(firstDate.Value.Month)}/{ConverterHelper.GetMonthName(lastDate.Value.Month)}";
+    }
+    
+    private void IsBetweenYears()
+    {
+        var firstDate = DatesOnlies.First();
+        var lastDate = DatesOnlies.Last();
+        
+        SelectedYear = firstDate.Value.Year == lastDate.Value.Year 
+            ? firstDate.Value.Year.ToString()
+            : $"{firstDate.Value.Year}/{lastDate.Value.Year}";
+    }
+    
     private void StarsPresenter_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
     {
         /*if (e.Source is Path star)
