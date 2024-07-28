@@ -26,8 +26,8 @@
         <ContentControl Grid.Row="0" Content="{Binding TopControl}"/>
         <!--<ContentControl Grid.Row="1" Content="{Binding SelectedPage}"/>-->
         <Grid Grid.Row="1" RowDefinitions="*, 40">
-            <Grid ColumnDefinitions="100, *">
-                <controls:TimeCalendarControl Background="#111111" SelectedDate="{Binding SelectedDate}"/>
+            <Grid RowDefinitions="120, *">
+                <controls:TimeCalendarControl HorizontalAlignment="Center" Background="#111111" SelectedDate="{Binding SelectedDate}"/>
             </Grid>
             <Border Grid.Row="1" Background="#111111" BorderBrush="#6D6D6D" BorderThickness="1" Margin="0 0" BoxShadow="0 20 100 10 #6D6D6D" Opacity="150">
                 <Grid ColumnDefinitions="*, *, *, *">
