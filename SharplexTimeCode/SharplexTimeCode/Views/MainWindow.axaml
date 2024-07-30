@@ -9,10 +9,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SharplexTimeCode.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SharplexTimeCode" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#0E0E0E"
-        ExtendClientAreaChromeHints="NoChrome" ExtendClientAreaToDecorationsHint="True"
+        Title="SharplexTimeCode" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+        ExtendClientAreaChromeHints="NoChrome" ExtendClientAreaToDecorationsHint="True" Background="Transparent"
         x:DataType="vm:MainWindowViewModel" BorderThickness="0"
-        Height="{Binding Height}" Width="{Binding Width}" CornerRadius="20">
+        Height="{Binding Height}" Width="{Binding Width}" CornerRadius="20"
+        PointerMoved="InputElement_OnPointerMoved" PointerPressed="InputElement_OnPointerPressed" PointerReleased="InputElement_OnPointerReleased">
     <Design.DataContext>
         <vm:MainWindowViewModel />
     </Design.DataContext>
@@ -25,7 +26,7 @@
     <Grid RowDefinitions="50, 550">
         <ContentControl Grid.Row="0" Content="{Binding TopControl}"/>
         <!--<ContentControl Grid.Row="1" Content="{Binding SelectedPage}"/>-->
-        <Grid Grid.Row="1" RowDefinitions="*, 40">
+        <Grid Grid.Row="1" RowDefinitions="*, 40" Background="#0E0E0E">
             <Grid RowDefinitions="120, *">
                 <controls:TimeCalendarControl HorizontalAlignment="Center" Background="#111111" SelectedDate="{Binding SelectedDate}"/>
             </Grid>
