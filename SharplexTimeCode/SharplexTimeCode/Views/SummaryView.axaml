@@ -20,7 +20,7 @@
         </Style>
     </UserControl.Styles>
     
-    <Border BorderBrush="Transparent" Background="#0E0E0E" BoxShadow="3 3 80 10 Transparent" Margin="1 2" BorderThickness="0" CornerRadius="20">
+    <Border x:Name="NonClickable1" BorderBrush="Transparent" Background="#0E0E0E" BoxShadow="3 3 80 10 Transparent" Margin="1 2" BorderThickness="0" CornerRadius="20">
         <Grid ColumnDefinitions="Auto, 270, *, Auto">
             <Grid Grid.Column="0" ColumnDefinitions="*, *, *" Margin="5 0 0 0">
                 <Button Grid.Column="0" Name="ActionButton" VerticalAlignment="Center" CornerRadius="10" HorizontalAlignment="Center" Background="#191919" BorderThickness="2" BorderBrush="#080808">
@@ -52,7 +52,7 @@
             </Grid>
             
             <Border Grid.Column="1" Margin="5 0 0 0" HorizontalAlignment="Left" CornerRadius="5"
-                    BoxShadow="0 4 3 0 Black" Width="270" Height="35">
+                    BoxShadow="0 4 3 0 Black" Width="270" Height="35" x:Name="NonClickable" PointerExited="NonClickable_OnPointerExited" PointerPressed="InputElement_OnPointerPressed">
                 <ComboBox VerticalAlignment="Center" PlaceholderForeground="White" CornerRadius="5" Foreground="DarkGray"
                            PlaceholderText="... Booking ..." Background="#0E0E0E"
                           HorizontalAlignment="Center" BorderBrush="Transparent" Width="270" Height="35" ItemsSource="{Binding BookingTypes}" SelectedItem="{Binding SelectedBookingType}">

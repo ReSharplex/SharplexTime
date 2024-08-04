@@ -1,4 +1,7 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using SharplexTimeCode.ViewModels;
 
@@ -27,5 +30,15 @@ public partial class SummaryView : UserControl
             model.CloseActionButtonFlyoutEvent += ViewModelOnCloseActionButtonFlyoutEvent;
             model.CloseMenuButtonFlyoutEvent += ViewModelOnCloseMenuButtonFlyoutEvent;
         }
+    }
+
+    private void InputElement_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (DataContext is SummaryViewModel viewModel) viewModel.RaiseComboBoxPressedOrReleased();
+    }
+
+    private void NonClickable_OnPointerExited(object? sender, PointerEventArgs e)
+    {
+        if (DataContext is SummaryViewModel viewModel) viewModel.RaiseComboBoxPressedOrReleased(false);
     }
 }

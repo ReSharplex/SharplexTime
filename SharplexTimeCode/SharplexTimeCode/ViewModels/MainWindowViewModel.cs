@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Avalonia;
 using ReactiveUI;
 
 namespace SharplexTimeCode.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    
     // transfer later to detailedview
     private DateOnly _selectedDate;
     public DateOnly SelectedDate
     {
         get => _selectedDate;
         set => this.RaiseAndSetIfChanged(ref _selectedDate, value);
-    }
+    }  
     
     public MainWindowViewModel(IServiceProvider provider)
     {
@@ -21,12 +21,26 @@ public class MainWindowViewModel : ViewModelBase
 
         SelectedDate = DateOnly.FromDateTime(DateTime.Now);
         
+        //
+        var summaryViewModel = new SummaryViewModel(this, provider);
+        var detailedViewModel = new DetailedViewModel(this, provider);
+        
+        //
+        summaryViewModel.ComboBoxPressedOrReleasedEvent += SummaryViewModelOnComboBoxPressedOrReleasedEvent;
+        
         // ...
-        Pages.Add(new SummaryViewModel(this, provider));
-        Pages.Add(new DetailedViewModel(this, provider));
+        Pages.Add(summaryViewModel);
+        Pages.Add(detailedViewModel);
         TopControl = Pages[0];
     }
+
+    private void SummaryViewModelOnComboBoxPressedOrReleasedEvent(bool isPressed)
+    {
+        IsComboBoxPressed = isPressed;
+    }
     
+    public bool IsComboBoxPressed { get; set; }
+
     public ObservableCollection<PageViewModel> Pages { get; } = [];
 
     private PageViewModel _topControl;

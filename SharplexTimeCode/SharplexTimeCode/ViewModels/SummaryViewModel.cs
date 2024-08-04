@@ -59,6 +59,9 @@ public class SummaryViewModel : PageViewModel
     public ICommand StopCommand { get; }
     public ICommand RefreshTypesCommand { get; }
     public ICommand SetDetailedViewCommand { get; }
+    
+    public delegate void ComboBoxPressedOrReleased(bool isPressed = true);
+    public event ComboBoxPressedOrReleased ComboBoxPressedOrReleasedEvent;
 
     public delegate void CloseActionButtonFlyout();
     public event CloseActionButtonFlyout CloseActionButtonFlyoutEvent;
@@ -88,6 +91,11 @@ public class SummaryViewModel : PageViewModel
         set => this.RaiseAndSetIfChanged(ref _selectedBookingType, value);
     }
 
+    public void RaiseComboBoxPressedOrReleased(bool isPressed = true)
+    {
+        ComboBoxPressedOrReleasedEvent?.Invoke(isPressed);
+    }
+    
     public void RaiseCloseActionButtonFlyout()
     {
         CloseActionButtonFlyoutEvent?.Invoke();

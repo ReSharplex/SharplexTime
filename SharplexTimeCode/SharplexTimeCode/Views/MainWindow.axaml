@@ -11,7 +11,7 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="SharplexTimeCode" HorizontalAlignment="Right" VerticalAlignment="Bottom"
         ExtendClientAreaChromeHints="NoChrome" ExtendClientAreaToDecorationsHint="True" Background="Transparent"
-        x:DataType="vm:MainWindowViewModel" BorderThickness="0"
+        x:DataType="vm:MainWindowViewModel" BorderThickness="0" CanResize="False"
         Height="{Binding Height}" Width="{Binding Width}" CornerRadius="20"
         PointerMoved="InputElement_OnPointerMoved" PointerPressed="InputElement_OnPointerPressed" PointerReleased="InputElement_OnPointerReleased">
     <Design.DataContext>
