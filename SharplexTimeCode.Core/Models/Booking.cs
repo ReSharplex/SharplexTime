@@ -1,10 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
 namespace SharplexTimeCode.Core.Models;
 
 public class Booking
 {
+    public Booking(DateTime createdAt, int bookingTypeId)
+    {
+        CreatedAt = createdAt;
+        BookingTypeId = bookingTypeId;
+    }
+
     [Key]
     public Guid Id { get; set; }
     
@@ -14,11 +19,11 @@ public class Booking
     
     public DateTime StartTime { get; set; }
     
-    public DateTime EndTime { get; set; }
+    public DateTime? EndTime { get; set; }
     
     public BookingStatus Status { get; set; }
     
     public DateTime CreatedAt { get; set; }
     
-    public DateTime UpdatedBy { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }

@@ -3,8 +3,11 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
+using SharplexTimeCode.Core.Models;
 using SharplexTimeCode.Core.Services;
+using SharplexTimeCode.Core.Temp;
 using SharplexTimeCode.Models;
+using SharplexTimeCode.Views;
 using static SharplexTimeCode.Helper.ButtonHelper;
 
 namespace SharplexTimeCode.ViewModels;
@@ -15,12 +18,44 @@ public class SummaryViewModel : PageViewModel
     {
         mainWindowViewModel.Height = 600;
         mainWindowViewModel.Width = 500;
-
+        
+        var bookingsTemp = provider.GetRequiredService<IBookingsTemp>();
+    
         SetButtonContent("Select", "#F1C40F", this);
         
-        PlayCommand = ReactiveCommand.Create(() => SetButtonContent("Timer", "LightGreen", this));
-        PauseCommand = ReactiveCommand.Create(() => SetButtonContent("Pause", "Orange", this));
-        StopCommand = ReactiveCommand.Create(() => SetButtonContent("Select", "#F1C40F", this));
+        PlayCommand = ReactiveCommand.Create(() =>
+        {
+            var response = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id ?? 0);
+            if (response.IsSuccess == ResponseStatus.Success)
+            {
+                SetButtonContent("Timer", "LightGreen", this);
+                return;
+            }
+
+            mainWindowViewModel.SetNotifyControl(response);
+        });
+        PauseCommand = ReactiveCommand.Create(() =>
+        {
+            var response = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id ?? 0);
+            if (response.IsSuccess == ResponseStatus.Success)
+            {
+                SetButtonContent("Pause", "Orange", this);
+                return;
+            }
+            
+            mainWindowViewModel.SetNotifyControl(response);
+        });
+        StopCommand = ReactiveCommand.Create(() =>
+        {
+            var response = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id ?? 0);
+            if (response.IsSuccess == ResponseStatus.Success)
+            {
+                SetButtonContent("Select", "#F1C40F", this);
+                return;
+            }
+            
+            mainWindowViewModel.SetNotifyControl(response);
+        });
         RefreshTypesCommand = ReactiveCommand.Create(() =>
         {
             var bookingTypes = provider.GetRequiredService<IBookingTypeService>().GetBookingTypes();
@@ -40,7 +75,7 @@ public class SummaryViewModel : PageViewModel
             if (mainWindowViewModel.SelectedPage is null)
             {
                 mainWindowViewModel.Height = 600;
-                mainWindowViewModel.SelectedPage = mainWindowViewModel.Pages[1];
+                mainWindowViewModel.SelectedPage = mainWindowViewModel.Pages[2];
             }
             else
             {

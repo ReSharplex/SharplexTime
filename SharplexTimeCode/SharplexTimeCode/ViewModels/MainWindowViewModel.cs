@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Avalonia;
 using ReactiveUI;
+using SharplexTimeCode.Core.Models;
 
 namespace SharplexTimeCode.ViewModels;
 
@@ -23,6 +24,7 @@ public class MainWindowViewModel : ViewModelBase
         
         //
         var summaryViewModel = new SummaryViewModel(this, provider);
+        var errorViewModel = new NotifyViewModel(this, provider);
         var detailedViewModel = new DetailedViewModel(this, provider);
         
         //
@@ -30,10 +32,24 @@ public class MainWindowViewModel : ViewModelBase
         
         // ...
         Pages.Add(summaryViewModel);
+        Pages.Add(errorViewModel);
         Pages.Add(detailedViewModel);
         TopControl = Pages[0];
     }
 
+    public void SetNotifyControl(ResponseResult result)
+    {
+        if (Pages[1] is not NotifyViewModel notifyViewModel) return;
+        
+        notifyViewModel.Message = result.Error;
+        TopControl = notifyViewModel;
+    }
+    
+    public void SetSummaryControl()
+    {
+        TopControl = Pages[0];
+    }
+    
     private void SummaryViewModelOnComboBoxPressedOrReleasedEvent(bool isPressed)
     {
         IsComboBoxPressed = isPressed;

@@ -1,0 +1,34 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:SharplexTimeCode.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Height="50" Width="500"
+             x:Class="SharplexTimeCode.Views.NotifyView" Background="#ffe6e6" x:DataType="vm:NotifyViewModel">
+    <Border x:Name="NonClickable1" BorderBrush="Transparent" BoxShadow="3 3 80 10 Transparent"
+            BorderThickness="0" CornerRadius="20">
+        <Grid ColumnDefinitions="50, 400, 50">
+            <Border Background="#ff6666" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <materialIcons:MaterialIcon Foreground="White" Opacity="50" HorizontalAlignment="Center" VerticalAlignment="Center" Kind="AlertCircle"
+                                            Height="35" Width="35"/>
+            </Border>
+
+            <ScrollViewer Grid.Column="1" Margin="5 0" Background="#ffe6e6">
+                <TextBlock TextWrapping="Wrap" FontWeight="Medium" Foreground="Black"  FontSize="15" 
+HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Message}">
+                </TextBlock>
+            </ScrollViewer>
+
+            <Button Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    Background="#ffe6e6" FontSize="10" Command="{Binding BackCommand}">
+                <materialIcons:MaterialIcon Kind="Close" Height="25" Width="25" Foreground="Black" />
+                <Button.Styles>
+                    <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="#ff3333"></Setter>
+                    </Style>
+                </Button.Styles>
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>
