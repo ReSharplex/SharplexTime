@@ -7,7 +7,6 @@ using SharplexTimeCode.Core.Models;
 using SharplexTimeCode.Core.Services;
 using SharplexTimeCode.Core.Temp;
 using SharplexTimeCode.Models;
-using SharplexTimeCode.Views;
 using static SharplexTimeCode.Helper.ButtonHelper;
 
 namespace SharplexTimeCode.ViewModels;
@@ -20,12 +19,12 @@ public class SummaryViewModel : PageViewModel
         mainWindowViewModel.Width = 500;
         
         var bookingsTemp = provider.GetRequiredService<IBookingsTemp>();
-    
+
         SetButtonContent("Select", "#F1C40F", this);
-        
+
         PlayCommand = ReactiveCommand.Create(() =>
         {
-            var response = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id ?? 0);
+            var response = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id);
             if (response.IsSuccess == ResponseStatus.Success)
             {
                 SetButtonContent("Timer", "LightGreen", this);
@@ -36,7 +35,7 @@ public class SummaryViewModel : PageViewModel
         });
         PauseCommand = ReactiveCommand.Create(() =>
         {
-            var response = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id ?? 0);
+            var response = bookingsTemp.PauseBookingPerButton(DateTime.Now);
             if (response.IsSuccess == ResponseStatus.Success)
             {
                 SetButtonContent("Pause", "Orange", this);
@@ -47,7 +46,7 @@ public class SummaryViewModel : PageViewModel
         });
         StopCommand = ReactiveCommand.Create(() =>
         {
-            var response = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id ?? 0);
+            var response = bookingsTemp.EndBookingPerButton();
             if (response.IsSuccess == ResponseStatus.Success)
             {
                 SetButtonContent("Select", "#F1C40F", this);

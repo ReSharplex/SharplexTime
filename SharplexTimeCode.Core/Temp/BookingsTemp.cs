@@ -6,16 +6,21 @@ public class BookingsTemp : IBookingsTemp
 {
     private List<Booking> Bookings { get; } = [];
 
-    public ResponseResult StartBookingPerButton(DateTime startDate, int bookingTypeId)
+    public ResponseResult StartBookingPerButton(DateTime startDate, int? bookingTypeId)
     {
         var lastBooking = Bookings.LastOrDefault();
+
+        if (bookingTypeId is null)
+        {
+            return ResponseResult.Failure("No booking type selected");
+        }
 
         if (lastBooking is not null && lastBooking.EndTime is null)
         {
             return ResponseResult.Failure("Booking already in progress, please end it before starting a new one");
         }
 
-        var booking = new Booking(startDate, bookingTypeId);
+        var booking = new Booking(startDate, (int) bookingTypeId);
         
         Bookings.Add(booking);
         
@@ -58,7 +63,7 @@ public class BookingsTemp : IBookingsTemp
 
 public interface IBookingsTemp
 {
-    ResponseResult StartBookingPerButton(DateTime startDate, int bookingTypeId);
+    ResponseResult StartBookingPerButton(DateTime startDate, int? bookingTypeId);
     ResponseResult PauseBookingPerButton(DateTime startDate);
     ResponseResult EndBookingPerButton();
 }
