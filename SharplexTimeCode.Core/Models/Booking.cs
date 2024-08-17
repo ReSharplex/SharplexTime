@@ -4,9 +4,9 @@ namespace SharplexTimeCode.Core.Models;
 
 public class Booking
 {
-    public Booking(DateTime createdAt, int bookingTypeId)
+    public Booking(DateTime startTime, int bookingTypeId)
     {
-        CreatedAt = createdAt;
+        StartTime = startTime;
         BookingTypeId = bookingTypeId;
     }
 
@@ -22,8 +22,6 @@ public class Booking
     public DateTime? EndTime { get; set; }
     
     public BookingStatus Status { get; set; }
-    
-    public DateTime CreatedAt { get; set; }
     
     public DateTime UpdatedAt { get; set; }
 }

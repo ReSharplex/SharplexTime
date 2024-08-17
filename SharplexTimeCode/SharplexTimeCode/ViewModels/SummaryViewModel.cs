@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
+using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using SharplexTimeCode.Core.Models;
@@ -22,16 +24,31 @@ public class SummaryViewModel : PageViewModel
 
         SetButtonContent("Select", "#F1C40F", this);
 
+        var dispatcherTime = new DispatcherTimer()
+        {
+            Interval = TimeSpan.FromSeconds(1)
+        };
+
+        dispatcherTime.Tick += (_, _) => UpdateTime();
+        
         PlayCommand = ReactiveCommand.Create(() =>
         {
-            var response = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id);
-            if (response.IsSuccess == ResponseStatus.Success)
+            var responseTuple = bookingsTemp.StartBookingPerButton(DateTime.Now, SelectedBookingType?.Id);
+            if (responseTuple.responseResult.IsSuccess == ResponseStatus.Success)
             {
                 SetButtonContent("Timer", "LightGreen", this);
+
+                if (responseTuple.bookingTypeId is not null)
+                {
+                    _timeSpan = _cacheTimeSpan;
+                    SelectedBookingType = BookingTypes.FirstOrDefault(a => a.Id == responseTuple.bookingTypeId);
+                };
+                
+                dispatcherTime.Start();
                 return;
             }
 
-            mainWindowViewModel.SetNotifyControl(response);
+            mainWindowViewModel.SetNotifyControl(responseTuple.responseResult);
         });
         PauseCommand = ReactiveCommand.Create(() =>
         {
@@ -39,6 +56,9 @@ public class SummaryViewModel : PageViewModel
             if (response.IsSuccess == ResponseStatus.Success)
             {
                 SetButtonContent("Pause", "Orange", this);
+                _cacheTimeSpan = _timeSpan;
+                _timeSpan = TimeSpan.FromSeconds(0);
+                SelectedBookingType = BookingTypes.First(a => a.Id == 162);
                 return;
             }
             
@@ -50,6 +70,10 @@ public class SummaryViewModel : PageViewModel
             if (response.IsSuccess == ResponseStatus.Success)
             {
                 SetButtonContent("Select", "#F1C40F", this);
+                dispatcherTime.Stop();
+                _timeSpan = TimeSpan.FromSeconds(0);
+                TimeText = "00:00";
+                SelectedBookingType = null;
                 return;
             }
             
@@ -88,6 +112,15 @@ public class SummaryViewModel : PageViewModel
         RefreshTypesCommand.Execute(null);
     }
 
+    private void UpdateTime()
+    {
+        _timeSpan = _timeSpan.Add(TimeSpan.FromSeconds(1));
+        TimeText = _timeSpan.ToString(@"hh\:mm");
+    }
+
+    private TimeSpan _timeSpan = TimeSpan.FromSeconds(0);
+    private TimeSpan _cacheTimeSpan = TimeSpan.FromSeconds(0);
+
     public ICommand PlayCommand { get; }
     public ICommand PauseCommand { get; }
     public ICommand StopCommand { get; }
@@ -103,6 +136,14 @@ public class SummaryViewModel : PageViewModel
     public delegate void CloseMenuButtonFlyout();
     public event CloseMenuButtonFlyout CloseMenuButtonFlyoutEvent;
     public ObservableCollection<BookingTypeUI> BookingTypes { get; } = [];
+
+    private string _timeText = "00:00";
+
+    public string TimeText
+    {
+        get => _timeText;
+        set => this.RaiseAndSetIfChanged(ref _timeText, value);
+    }
     
     private string _actionButtonContent;
     public string ActionButtonContent
@@ -118,8 +159,8 @@ public class SummaryViewModel : PageViewModel
         set => this.RaiseAndSetIfChanged(ref _actionButtonForeground, value);
     }
     
-    private BookingTypeUI _selectedBookingType;
-    public BookingTypeUI SelectedBookingType
+    private BookingTypeUI? _selectedBookingType;
+    public BookingTypeUI? SelectedBookingType
     {
         get => _selectedBookingType;
         set => this.RaiseAndSetIfChanged(ref _selectedBookingType, value);
